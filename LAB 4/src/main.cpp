@@ -65,14 +65,6 @@ void setup() {
   pinMode(Incremento, INPUT);
   pinMode(Decremento, INPUT);
 
-  pinMode(D4, OUTPUT);
-  pinMode(D5, OUTPUT);
-  pinMode(D6, OUTPUT);
-  pinMode(D7, OUTPUT);
-  pinMode(RS, OUTPUT);
-  pinMode(E, OUTPUT);
-
-
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -108,6 +100,8 @@ void loop() {
   LCD.setCursor(2,13);
   LCD.print(contador);  
 
+  delay(250); 
+
   
 }
 
@@ -125,7 +119,7 @@ void LectorVoltajes(void){
 
   //Conversor de decenas, unidades y decimales para V2
   decenas2 = V2/10;
-  unidades2 = V2 - decenas1*10;
+  unidades2 = V2 - decenas2*10;
   decimales2 = (V2*10) - (decenas2*100) - (unidades2*10); 
 }
 
