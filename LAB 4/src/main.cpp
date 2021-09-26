@@ -34,9 +34,11 @@ void Contador(void);
 //---------------------------------------------------------------------------------------------------------------------
 //Variables Globales
 //----------------------------------------------------------------------------------------------------------------------
+
+//Creación de las variables que reciben el dato analogico del voltaje
 float V1 = 0.0; 
 float V2 = 0.0; 
-
+//Generación para las variables de cada uno de los datos mostrados en la LCD 
 int decenas1 = 0; 
 int unidades1 = 0; 
 int decimales1 = 0;
@@ -59,6 +61,18 @@ void setup() {
   Serial.begin(115200); 
   // Este comando limpia la LCD
   LCD.begin(16, 2);
+
+  pinMode(Incremento, INPUT);
+  pinMode(Decremento, INPUT);
+
+  pinMode(D4, OUTPUT);
+  pinMode(D5, OUTPUT);
+  pinMode(D6, OUTPUT);
+  pinMode(D7, OUTPUT);
+  pinMode(RS, OUTPUT);
+  pinMode(E, OUTPUT);
+
+
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -91,6 +105,9 @@ void loop() {
   LCD.print(decimales2);
   LCD.print('V');
 
+  LCD.setCursor(2,13);
+  LCD.print(contador);  
+
   
 }
 
@@ -119,14 +136,26 @@ void Contador(void){
   if (digitalRead(Incremento)==1){
     delay(20);
     if (digitalRead(Incremento)==0){
-      contador++; 
+      if (contador < 256){
+        contador++;
+      }
+      else if (contador >= 256){
+        contador = 0; 
+      }
     }
   }
 
   if (digitalRead(Decremento)==1){
     delay(20);
     if (digitalRead(Decremento)==0){
-      contador--; 
+      if (contador > 0){
+        contador--;
+      }
+
+      else if (contador <= 0){
+        contador = 255; 
+      }
+       
     }
   }
 }
