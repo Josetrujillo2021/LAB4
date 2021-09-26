@@ -76,12 +76,22 @@ void loop() {
 
   LCD.clear(); //limpia la LCD
   LCD.print("Pot1:"); //IMPRIMER EN LA LCD
+  Serial.print("Pot1:");
+  Serial.print(decenas1);
+  Serial.print(unidades1);
+  Serial.println(decimales1);
 
   LCD.setCursor(1, 7); //esta función permite colocar el potenciometro en un espacio específico del LCD
   LCD.print("Pot2:"); 
+  Serial.print("Pot2:");
+  Serial.print(decenas2);
+  Serial.print(unidades2);
+  Serial.println(decimales2);
 
   LCD.setCursor(1, 13);
   LCD.print("CPU:");
+  Serial.print("CPU:");
+  Serial.print(contador);
 
   LCD.setCursor(2, 1);
   LCD.print(decenas1);
