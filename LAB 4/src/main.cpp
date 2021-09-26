@@ -15,8 +15,8 @@
 //----------------------------------------------------------------------------------------------------------------------
 #define Incremento 21
 #define Decremento 19
-#define Voltaje1 18
-#define Voltaje2 5
+#define Voltaje1 13
+#define Voltaje2 12
 
 #define D4 32
 #define D5 33
@@ -62,8 +62,8 @@ void setup() {
   // Este comando limpia la LCD
   LCD.begin(16, 2);
 
-  pinMode(Incremento, INPUT);
-  pinMode(Decremento, INPUT);
+  pinMode(Incremento, INPUT_PULLUP);
+  pinMode(Decremento, INPUT_PULLUP);
 
 }
 
@@ -110,7 +110,7 @@ void loop() {
   LCD.setCursor(2,13);
   LCD.print(contador);  
 
-  delay(250); 
+  delay(2); 
 
   
 }
@@ -123,35 +123,39 @@ void LectorVoltajes(void){
   V2 = analogReadMilliVolts(Voltaje2);
 
   //Conversor de decenas, unidades y decimales para V1
-  decenas1 = V1/10;
-  unidades1 = V1 - decenas1*10;
-  decimales1 = (V1*10) - (decenas1*100) - (unidades1*10); 
+  decenas1 = V1/100.0;
+  V1 = V1 - decenas1*100.0;
+  unidades1 = V1/10.0;
+  V1 = V1 - unidades1*10.0; 
+  decimales1 = V1; 
 
   //Conversor de decenas, unidades y decimales para V2
-  decenas2 = V2/10;
-  unidades2 = V2 - decenas2*10;
-  decimales2 = (V2*10) - (decenas2*100) - (unidades2*10); 
+  decenas2 = V2/100.0;
+  V2 = V2 - decenas2*100.0;
+  unidades2 = V2/10.0;
+  V2 = V2 - unidades2*10.0; 
+  decimales2 = V2;
 }
 
 //---------------------------------------------------------------------------------------------------------------------
 //Contador
 //---------------------------------------------------------------------------------------------------------------------
 void Contador(void){
-  if (digitalRead(Incremento)==1){
-    delay(20);
-    if (digitalRead(Incremento)==0){
-      if (contador < 256){
+  if (digitalRead(Incremento)==0){
+    delay(200);
+    if (digitalRead(Incremento)==1){
+      if (contador < 255){
         contador++;
       }
-      else if (contador >= 256){
+      else if (contador >= 255){
         contador = 0; 
       }
     }
   }
 
-  if (digitalRead(Decremento)==1){
-    delay(20);
-    if (digitalRead(Decremento)==0){
+  if (digitalRead(Decremento)==0){
+    delay(200);
+    if (digitalRead(Decremento)==1){
       if (contador > 0){
         contador--;
       }
